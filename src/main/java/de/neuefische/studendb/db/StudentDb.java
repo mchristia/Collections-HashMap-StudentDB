@@ -9,8 +9,12 @@ public class StudentDb {
 
     private List<Student> students;
 
+    public StudentDb(){
+        this.students = new ArrayList<>();
+    }
+
     public StudentDb(List<Student> students) {
-        this.students = students;
+        this.students.addAll(students);
     }
     public StudentDb(Student[] students) {
         this.students = new ArrayList<>();
@@ -54,5 +58,30 @@ public class StudentDb {
         return -1;
     }
 
+    public Student findFirstById(String id){
+        if(id == null) {
+            return null;
+        }
+        for(Student student : students){
+            if(student.getId().equals(id)){
+                return student;
+            }
+        }
+        return null;
+    }
 
+    public List<Student> findMultipleById(String id){
+        List<Student> idList = new ArrayList<>();
+
+        for(Student student : students){
+            if(student.getId().equals(id)){
+                idList.add(student);
+            }
+        }
+        return idList;
+    }
+
+    public void removeById(String id){
+        this.remove(findFirstById(id));
+    }
 }
