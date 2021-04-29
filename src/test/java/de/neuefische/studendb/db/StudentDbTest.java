@@ -119,27 +119,6 @@ class StudentDbTest {
         assertEquals(expected, actual);
     }
 
-    @Test
-    @DisplayName("toString() returns a formatted list of all students")
-    public void testToString() {
-        // Given
-        List<Student> students = new ArrayList<>();
-        students.add(new Student("Jane", "42"));
-        students.add(new Student("Klaus", "13"));
-        students.add(new Student("Franky", "100"));
-
-        StudentDb studentDb = new StudentDb(students);
-
-        // When
-        String actual = studentDb.toString();
-
-        // Then
-        String expected = "Student{name='Jane', id='42'}\n"
-                + "Student{name='Klaus', id='13'}\n"
-                + "Student{name='Franky', id='100'}\n";
-        assertEquals(expected, actual);
-    }
-
     @ParameterizedTest
     @MethodSource("provideTestAddArguments")
     public void testAdd(ArrayList<Student> givenStudents, ArrayList<Student> expectedStudents) {
@@ -157,7 +136,8 @@ class StudentDbTest {
 
     @ParameterizedTest
     @MethodSource("provideTestRemoveArguments")
-    public void testRemove(ArrayList<Student> givenStudents, ArrayList<Student> expectedStudents) {
+    public void testRemove(ArrayList<Student> givenStudents,
+                           ArrayList<Student> expectedStudents) {
         // Given
         StudentDb studentDb = new StudentDb(givenStudents);
 
@@ -213,46 +193,6 @@ class StudentDbTest {
         // Then
 
         assertNull(actualStudent);
-    }
-    @Test
-    @DisplayName("Method finById on not existing Student")
-    public void testFindByIdSameIdMultipleTimesFalse(){
-        // Given
-        StudentDb studentDb = new StudentDb();
-        studentDb.add(new Student("Hans", "1"));
-        studentDb.add(new Student("Julia", "2"));
-        studentDb.add(new Student("Marc", "2"));
-        studentDb.add(new Student("Kelly", "2"));
-
-        // When
-        Student actualStudent = studentDb.findFirstById("2");
-
-        // Then
-        Student expectedStudent1 = new Student("Julia", "2");
-        assertEquals(expectedStudent1, actualStudent);
-        Student expectedStudent2 = new Student("Marc", "2");
-        assertNotEquals(expectedStudent2, actualStudent);
-    }
-    @Test
-    @DisplayName("Method finById on not existing Student")
-    public void testFindByIdSameIdMultipleTimesTrue(){
-        // Given
-        StudentDb studentDb = new StudentDb();
-        studentDb.add(new Student("Hans", "1"));
-        studentDb.add(new Student("Julia", "2"));
-        studentDb.add(new Student("Marc", "2"));
-        studentDb.add(new Student("Kelly", "2"));
-
-        // When
-        List<Student> actualStudent = studentDb.findMultipleById("2");
-
-        // Then
-        List<Student> expectedStudent1 = new ArrayList<>(
-                List.of(new Student("Julia", "2"),
-                        new Student("Marc", "2"),
-                        new Student("Kelly", "2")));
-        assertEquals(expectedStudent1, actualStudent);
-
     }
 
     @Test
